@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #container {
+            height: 100%;
+            width: 100%;
+            background-color: white;
+            position: relative;
+        }
+
+        #card1 {
+            height: 150px;
+            width: 100px;
+            background-color: green;
+            position: absolute;
+        }
+
+        #card2 {
+            height: 150px;
+            width: 100px;
+            background-color: green;
+            position: absolute;
+        }
+
+        #card3 {
+            height: 150px;
+            width: 100px;
+            background-color: green;
+            position: absolute;
+        }
+
+        #card4 {
+            height: 150px;
+            width: 100px;
+            background-color: green;
+            position: absolute;
+        }
+    </style>
+
+    <script>
+
+
+        function myFunction() {
+
+            console.log("MyFunction called");
+            var count = 1;
+
+            var x;
+            var y;
+
+            if ((count % 4) == 1) {
+
+                var card1 = document.getElementById("card1");
+                x = 0;
+                y = 200;
+                var s = setInterval(moveCard1, 1);
+
+                function moveCard1() {
+                    if ( x < 650) {
+                        x++;
+                    } else {
+                        card1.style.backgroundColor = 'red';
+                    }
+                    card1.style.left = x + "px";
+                    card1.style.top = y + "px";
+                }
+
+            } else if ((count % 4) == 2) {
+
+                var card2 = document.getElementById("card2");
+                x = 650;
+                y = 0;
+                var s = setInterval(moveCard2, 1);
+
+                function moveCard2() {
+                    if ( y < 200) {
+                        y++;
+                    } else {
+                        card2.style.backgroundColor = 'red';
+                    }
+                    card2.style.left = x + "px";
+                    card2.style.top = y + "px";
+                }
+
+            } else if ((count % 4) == 3) {
+
+                var card3 = document.getElementById("card3");
+                y = 400;
+                x = 650;
+                var s = setInterval(moveCard3, 1);
+
+                function moveCard3() {
+                    if (y > 200 ) {
+                        y--;
+                    } else {
+                        card3.style.backgroundColor = 'red';
+                    }
+                    card3.style.left = x + "px";
+                    card3.style.top = y + "px";
+                }
+
+            } else if ((count % 4) == 0) {
+
+                var card4 = document.getElementById("card4");
+                y = 200;
+                x = 800;
+                var s = setInterval(moveCard4, 1);
+
+                function moveCard4() {
+                    if (x > 250) {
+                        x--;
+                    } else {
+                        card4.style.backgroundColor = 'red';
+                    }
+                    card4.style.left = x + "px";
+                    card4.style.top = y + "px";
+                }
+
+            }
+
+
+        }
+
+    </script>
+
+</head>
+<body>
+<button class=btn default id="go" onclick="myFunction()">Go</button>
+
+
+<div id=container>
+    <div id='card1'></div>
+    <div id='card2'></div>
+    <div id='card3'></div>
+    <div id='card4'></div>
+</div>
+
+</body>
+</html>
