@@ -38,9 +38,11 @@ public class PlayerController{
     public static void updatePlayer(String playerName, int playerID){
         try {
             PreparedStatement ps = Main.db.prepareStatement("UPDATE Players SET Players.Name = ? WHERE Players.PlayerID = ?");
-            ps.set
+            ps.setString(1, playerName);
+            ps.setInt(2, playerID);
+            ps.executeUpdate();
         } catch (Exception exception) {
-
+            System.out.println("Error: " + exception.getMessage());
         }
 
     }
