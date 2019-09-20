@@ -1,6 +1,9 @@
+package Controllers;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-public class CardController {
+@Path("Card/")
+public class Card {
     public static void selectPlayer(){
         try{
             PreparedStatement ps = Main.db.prepareStatement("SELECT * FROM Cardss"); /*(WHERE ...)*/

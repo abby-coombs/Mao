@@ -1,16 +1,33 @@
+package Server;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+
+import Controllers.Player;
 import org.sqlite.SQLiteConfig;
 public class Main {
 
         public static Connection db = null;
 
         public static void main(String[] args) {
-            PlayerController.openDatabase("Main.db");
-        // code to get data from, write to the database etc goes here
-          //  insert(0,1);
-         //   insert(0,2);
-            PlayerController.closeDatabase();
+            Player.openDatabase("Server.Main.db");
+            ResourceConfig config = new ResourceConfig();
+            config.packages("Controllers");
+            config.register(MultiPartFeature.class);
+            ServletHolder servlet = new ServletHolder(new ServletContainer(config));
+
+            Server server = new Server(8081);
+            ServletContextHandler context = new ServletContextHandler(server, "/");
+            context.addServlet(servlet, "/*");
+
+            try {
+                server.start();
+                System.out.println("Server successfully started.");
+                server.join();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
 
         public static void openDatabase(String dbFile) {

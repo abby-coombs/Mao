@@ -1,7 +1,10 @@
+package Controllers;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class PlayerController{
+@Path("Player/")
+public class Player {
     public static void insertPlayer(String Name, int WinCount) {
         try {
             PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Players (Players.Name, Players.WinCount) VALUES (?,?)");
