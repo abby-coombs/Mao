@@ -2,11 +2,11 @@ package Controllers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-@Path("Card/")
+/*@Path("Card/")*/
 public class Card {
     public static void selectPlayer(){
         try{
-            PreparedStatement ps = Main.db.prepareStatement("SELECT * FROM Cardss"); /*(WHERE ...)*/
+            PreparedStatement ps = Server.Main.db.prepareStatement("SELECT * FROM Cardss"); /*(WHERE ...)*/
             ResultSet results = ps.executeQuery();
             while (results.next()){
                 int cardID = results.getInt(1);

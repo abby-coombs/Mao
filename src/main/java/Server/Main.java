@@ -3,14 +3,20 @@ package Server;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import Controllers.Player;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.sqlite.SQLiteConfig;
+
 public class Main {
 
         public static Connection db = null;
 
         public static void main(String[] args) {
-            Player.openDatabase("Server.Main.db");
+            openDatabase("Server.Main.db");
             ResourceConfig config = new ResourceConfig();
             config.packages("Controllers");
             config.register(MultiPartFeature.class);
@@ -38,14 +44,14 @@ public class Main {
                 config.enforceForeignKeys(true);
                 //establishes database settings (maintains structural integrity)
                 db = DriverManager.getConnection("jdbc:sqlite:resources/" + dbFile, config.toProperties());
-                //opens datavase file
+                //opens database file
                 System.out.println("Database connection successfully established.");
             } catch (Exception exception) {
                 //catches errors & prints message rather then closing program
                 System.out.println("Database connection error: " + exception.getMessage());
             }
 
-        public static void closeDatabase(){
+        /*public static void closeDatabase(){
             try {
                 db.close();
                 //closes database file
@@ -53,6 +59,6 @@ public class Main {
             } catch (Exception exception) {
                 //catches errors & prints message rather then closing program
                 System.out.println("Database disconnection error: " + exception.getMessage());
-            }
+            } */
         }
-}}
+}

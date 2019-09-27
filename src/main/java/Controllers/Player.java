@@ -1,9 +1,12 @@
 package Controllers;
 
+import Server.Main;
+
+import javax.ws.rs.Path;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-@Path("Player/")
+/*@Path("Player/")*/
 public class Player {
     public static void insertPlayer(String Name, int WinCount) {
         try {
