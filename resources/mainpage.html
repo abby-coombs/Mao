@@ -22,8 +22,14 @@
 <script>
     var btn = document.getElementById("go");
     var count = 0;
+    var playdirection = 'forwards'
     btn.onclick = function () {
-        count++;
+        if (playdirection == 'forwards') {
+        count ++
+        } else { count -- }
+        while (count < 0) {
+            count += 4
+        }
         var x = 0;
         var y = 0;
         if ((count % 4) == 1) {

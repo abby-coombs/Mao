@@ -16,7 +16,7 @@ public class Main {
         public static Connection db = null;
 
         public static void main(String[] args) {
-            openDatabase("Server.Main.db");
+            openDatabase("Users.db");
             ResourceConfig config = new ResourceConfig();
             config.packages("Controllers");
             config.register(MultiPartFeature.class);
