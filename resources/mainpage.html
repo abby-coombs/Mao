@@ -105,6 +105,99 @@
 
         }
     }
+
+    //game functions-rename variables & attach to turns/database
+    function checkplayedcard(cardsuit, cardvalue, lastcardsuit, lastcardvalue, currentplayer) {
+        if((cardsuit != lastcardsuit)&&(cardvalue != lastcardvalue)) {
+            penalties(true, currentplayer)
+        }
+    }
+    function lastcard(handsize, currentplayer){
+        if(currentplayer != user) {
+            if (handsize == 1) {
+                if (Math.random() >= 0.2){
+                    console.log("[last card message]");
+                }
+            }
+        } //add player's turn
+    }
+    function specialcards(cardsuit, cardvalue, lastcardvalue, count, currentplayer){
+        if (lastcardvalue == 7){
+            if (currentplayer != user) {
+                if (Math.random() >= 0.2){
+                    console.log("[thank you]")
+                } else {penalties(true, currentplayer)}
+            } else {
+                //timer!
+                if (/*Not printed thank you*/) {
+                    penalties(true, currentplayer)
+                }
+            }
+        }
+        switch (cardvalue){
+            case '7':
+                if (currentplayer != user) {
+                    if (Math.random() >= 0.2){
+                        console.log("[have a nice day]")
+                    } else {penalties(true, currentplayer)}
+                } else {
+                    //timer!
+                    if (/*Not printed message*/) {
+                        penalties(true, currentplayer)
+                    }
+                }
+                break
+            case 'A':
+                count ++;
+                break
+            case 'J':
+                jacks();
+                break
+            case K:
+                if (playdirection == forwards) {
+                    playdirection = backwards;
+                } else {playdirection = forwards}
+        }
+        if (cardsuit == 'S') {
+            if (Math.random() >= 0.2) {
+                console.log(cardvalue + " of " + cardsuit)
+            } else {penalties(true, currentplayer)}
+        }
+    }
+    function jacks(){
+        //timer / delay
+        if (Math.random() >= 0.2) {
+            switch(Math.ceil(Math.random() * 4)){
+                case 1:
+                    console.log('Hearts')
+                    possiblesuit = 'H'
+                    break
+                case 2:
+                    console.log('Hearts')
+                    possiblesuit = 'S'
+                    break
+                case 3:
+                    console.log('Clubs')
+                    possiblesuit = 'C'
+                    break
+                case 4:
+                    console.log('Diamonds')
+                    possiblesuit = 'D'
+                    break
+            }
+            if (/*before player acts*/) {
+                cardsuit = possiblesuit;
+            }
+        }
+    }
+    function penalties(rulebroken, currentplayer){
+        if(rulebroken == true){
+            /*currentplayer's cardnumber ++
+            push top card from drawpile
+            add into player's hand
+             */
+        }
+    }
 </script>
 </body>
 </html>

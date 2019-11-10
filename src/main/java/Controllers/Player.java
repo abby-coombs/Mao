@@ -1,10 +1,9 @@
 package Controllers;
 
 import Server.Main;
-import com.sun.jersey.multipart.FormDataParam;
+//import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
@@ -17,7 +16,7 @@ public class Player {
     @Path("new")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String insertPlayer(@FormDataParam("Name") String Name, @FormDataParam("WinCount") Integer WinCount) {
+    public String insertPlayer(@org.glassfish.jersey.media.multipart.FormDataParam("Name") String Name, @org.glassfish.jersey.media.multipart.FormDataParam("WinCount") Integer WinCount) {
         try {
             if (Name == null||WinCount == null){
                 throw new Exception("One or more parameters missing in HTTP request.");
@@ -39,7 +38,7 @@ public class Player {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     //creates handler for /players/delete
-    public String deletePlayer(@FormDataParam("Name") String Name){
+    public String deletePlayer(@org.glassfish.jersey.media.multipart.FormDataParam("Name") String Name){
         try{
             if (Name == null){
                 throw new Exception("One or more parameters missing in HTTP request.");
@@ -84,17 +83,17 @@ public class Player {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     //creates handler for /players/update
-    public String updatePlayer(@FormDataParam("playerName") String playerName, @FormDataParam("playerID") Integer playerID){
+    public String updatePlayer(@org.glassfish.jersey.media.multipart.FormDataParam("Name") String PlayerName, @org.glassfish.jersey.media.multipart.FormDataParam("Name") Integer PlayerID){
        //specifies parameters to pass into API method
         try {
-            if(playerName == null || playerID == null) {
+            if(PlayerName == null || PlayerID == null) {
                 throw new Exception("One or more parameters missing in HTTP request.");
             }
             //ensures the request will not  fail due to empty parameters
-            System.out.println("player/update name=" + playerName);
+            System.out.println("player/update name=" + PlayerName);
             PreparedStatement ps = Main.db.prepareStatement("UPDATE Players SET Players.Name = ? WHERE Players.PlayerID = ?");
-            ps.setString(1, playerName);
-            ps.setInt(2, playerID);
+            ps.setString(1, PlayerName);
+            ps.setInt(2, PlayerID);
             ps.executeUpdate();
             //updates player details
             return "{\"status\": \"OK\"}";
