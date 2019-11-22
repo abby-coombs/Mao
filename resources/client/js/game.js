@@ -4,8 +4,69 @@ function pageLoad() {
 
     console.log("Page load is running :)");
 
+    var noresponse
+    var spadesresponse
+    var JH
+    var JS
+    var JC
+    var JD
+    var sevenplay
+    var after7response
+    var lastresponse
+    var endresponse
+    document.getElementById("noresponse").onselect = function () {
+        noresponse = true
+    }
+    document.getElementById("spadesresponse").onselect = function () {
+        spadesresponse = true
+        setTimeout(wait, 15000)
+        spadesresponse = false
+    }
+    document.getElementById("JH").onselect = function () {
+        JH = true
+        setTimeout(wait, 15000)
+        JH = false
+    }
+    document.getElementById("JS").onselect = function () {
+        JS = true
+        setTimeout(wait, 15000)
+        JS = false
+    }
+    document.getElementById("JC").onselect = function () {
+        JC = true
+        setTimeout(wait, 15000)
+        JC = false
+    }
+    document.getElementById("JD").onselect = function () {
+        JD = true
+        setTimeout(wait, 15000)
+        JD = false
+    }
+    document.getElementById("sevenplay").onselect = function () {
+        sevenplay = true
+        setTimeout(wait, 15000)
+        sevenplay = false
+    }
+    document.getElementById("after7response").onselect = function () {
+        after7response = true
+        setTimeout(wait, 15000)
+        after7response = false
+    }
+    document.getElementById("lastresponse").onselect = function () {
+        lastresponse = true
+        setTimeout(wait, 15000)
+        lastresponse = false
+    }
+    document.getElementById("endresponse").onselect = function () {
+        endresponse = true
+        setTimeout(wait, 15000)
+        endresponse = false
+    }
+
+    function wait(){console.log("waited");}
+
 //moves the cards from relevant pile to centre
-    var btn = document.getElementById("go");
+    var btn = document.getElementById("Play");
     var count = 0;
     var playdirection = 'forwards'
     btn.onclick = function () {
@@ -88,27 +149,4 @@ function pageLoad() {
 
 }
 
-//RENAME VARIABLES WHERE NEEDED AND ATTACH TO DATABASE
-//game mechanics-check card played against rules and issue appropriate responses
-//checks card is of correct suit or value, and issues penalty if not
-function checkplayedcard(cardsuit, cardvalue, lastcardsuit, lastcardvalue, currentplayer) {
-    if((cardsuit != lastcardsuit)&&(cardvalue != lastcardvalue)) {
-        penalties(true, currentplayer)
-    }
-}
-//checks for response when player on last card
-function lastcard(handsize, currentplayer){
-    //automates non-user turns
-    if(currentplayer != user) {
-        if (handsize == 1) {
-            //allows for 20% chance of failure, so user can see rules broken to learn them, gives penalty if broken
-            if (Math.random() >= 0.2){
-                console.log("[last card message]");
-            }
-        }
-        //runs user response check after 10 seconds
-    } else {
-        setTimeout(useerlastcard, 10000)
 
-    }
-}

@@ -1,5 +1,30 @@
+//RENAME VARIABLES WHERE NEEDED
+//game mechanics-check card played against rules and issue appropriate responses
+//checks card is of correct suit or value, and issues penalty if not
+function checkplayedcard(cardsuit, cardvalue, lastcardsuit, lastcardvalue, currentplayer) {
+    if((cardsuit != lastcardsuit)&&(cardvalue != lastcardvalue)) {
+        penalties(true, currentplayer)
+    }
+}
+
+//checks for response when player on last card
+function lastcard(handsize, currentplayer){
+    //automates non-user turns
+    if(currentplayer != user) {
+        if (handsize == 1) {
+            //allows for 20% chance of failure, so user can see rules broken to learn them, gives penalty if broken
+            if (Math.random() >= 0.2){
+                console.log("[last card message]");
+            }
+        }
+    //runs user response check after 10 seconds
+    } else {
+        setTimeout(useerlastcard, 10000)
+
+    }
+}
 //checks whether user has responded by the end of the 10 second window
-/*function userlastcard() {
+function userlastcard() {
     //issues penalty if not
     if (/*player not acted*/) {
         penalties(true, currentplayer)
