@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+<h1 style = "font-size:60px;text-align:center;">Menu</h1>
+<div id = newgamelink; style = "font-size:30px; text-align:center; text-decoration: underline">New game [replay icon] (links)</div>
+<div id = playerchangelink; style = "font-size:30px; text-align:center; text-decoration: underline">Change player [profile icon] (links)</div>
+<script>
+    var newgamelink = document.getElementById(newgamelink);
+    newgamelink.onclick = function() {
+        window.location.pathname = "client/mainpage.html" //est. that game clears/restarts
+    }
+    var playerchangelink = document.getElementById(playerchangelink);
+    playerchangelink.onclick = function() {
+        window.location.pathname = 'client/PlayerSelect'
+    }
+</script>
+</body>
+</html>
