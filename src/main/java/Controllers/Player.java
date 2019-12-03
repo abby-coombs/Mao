@@ -16,15 +16,16 @@ public class Player {
     @Path("new")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String insertPlayer(@org.glassfish.jersey.media.multipart.FormDataParam("Name") String Name, @org.glassfish.jersey.media.multipart.FormDataParam("WinCount") Integer WinCount) {
+    public String insertPlayer(@org.glassfish.jersey.media.multipart.FormDataParam("Name") String Name, @org.glassfish.jersey.media.multipart.FormDataParam("WinCount") Integer WinCount, @org.glassfish.jersey.media.multipart.FormDataParam("PlayerID") Integer PlayerID) {
         try {
             if (Name == null||WinCount == null){
                 throw new Exception("One or more parameters missing in HTTP request.");
             }
             System.out.println("player/new Name =" + Name);
-            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Players (Players.Name, Players.WinCount) VALUES (?,?)");
+            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Players (Players.Name, Players.WinCount, Players.PlayerID) VALUES (?,?, ?)");
             ps.setString(1, Name);
             ps.setInt(2,WinCount);
+            ps.setInt(3, PlayerID);
             ps.executeUpdate();
             System.out.println();
             return "{\"status\":\"OK\"}";
@@ -83,7 +84,7 @@ public class Player {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     //creates handler for /players/update
-    public String updatePlayer(@org.glassfish.jersey.media.multipart.FormDataParam("Name") String PlayerName, @org.glassfish.jersey.media.multipart.FormDataParam("Name") Integer PlayerID){
+    public String updatePlayer(@org.glassfish.jersey.media.multipart.FormDataParam("Name") String PlayerName, @org.glassfish.jersey.media.multipart.FormDataParam("PlayerID") Integer PlayerID){
        //specifies parameters to pass into API method
         try {
             if(PlayerName == null || PlayerID == null) {

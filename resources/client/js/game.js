@@ -2,9 +2,10 @@
 
 function pageLoad() {
 
-    console.log("Page load is running :)");
+    console.log("Page load running");
 
-    var currentplayer
+    //variables!
+    var currentplayer = (count % 4)
     var handsize = 5
     var cardsuit
     var cardvalue
@@ -14,86 +15,90 @@ function pageLoad() {
     var rulebroken
     var cpuresponses = []
     var playerresponses = []
-
     var btn = document.getElementById("Play");
     var count = 0;
     var playdirection = 'forwards'
     var btn2 = document.getElementById("go");
-    var e = document.getElementById("playeroptions")
-    var playersaid = e.options[e.selectedIndex].value
+    var option = document.getElementById("playeroptions")
+    var playersaid = option.options[option.selectedIndex].value
 
     //moves the cards from relevant pile to centre
     btn.onclick = function () {
+        //sets count ready for next turn, depending on direction of play
         if (playdirection == 'forwards') {
             count++
         } else {
             count--
         }
+        //ensures count % 4 between 0 and 3
         while (count < 0) {
             count += 4
         }
+        //sets initial position of card pile
+        //CHANGE SO THAT EACH PLAYER HAS PILE, PLUS DRAWPILE!
         var x = 0;
         var y = 0;
-        if ((count % 4) == 1) {
+        //moves relevant player's card
+        if (currentplayer == 1) {
             var card = document.getElementById("card")
-            currentplayer = 1
             var s = setInterval(moveCard1, 1);
             y = 200;
-
+            //alters position by 1px each millisecond, producing smooth animation
             function moveCard1() {
                 if (x >= 0 && x < 650) {
                     x++;
                 }
+                //flips card over when in position
                 if (x == 650 && y == 200) {
                     card.style.backgroundColor = 'red';
                 }
                 card.style.left = x + "px";
                 card.style.top = y + "px";
             }
-        } else if ((count % 4) == 2) {
+        } else if (currentplayer == 2) {
             var card2 = document.getElementById("card2");
             var s = setInterval(moveCard2, 1);
             x = 650;
-            currentplayer = 2
-
+            //alters position by 1px each millisecond, producing smooth animation
             function moveCard2() {
                 if (y >= 0 && y < 200) {
                     y++;
                 }
+                //flips card over when in position
                 if (x == 650 && y == 200) {
                     card2.style.backgroundColor = 'red';
                 }
                 card2.style.left = x + "px";
                 card2.style.top = y + "px";
             }
-        } else if ((count % 4) == 0) {
+        } else if (currentplayer == 0) {
             var card3 = document.getElementById("card3");
             var s = setInterval(moveCard3, 1);
             y = 400;
             x = 650;
-            currentplayer = 3
-
+            //alters position by 1px each millisecond, producing smooth animation
             function moveCard3() {
                 if (y > 200 && y <= 400) {
                     y--;
                 }
+                //flips card over when in position
                 if (x == 650 && y == 200) {
                     card3.style.backgroundColor = 'red';
                 }
                 card3.style.left = x + "px";
                 card3.style.top = y + "px";
             }
-        } else if ((count % 4) == 3) {
+        } else if (currentplayer == 3) {
             var card4 = document.getElementById("card4")
             var s = setInterval(moveCard4, 1);
             x = 1300;
-            currentplayer = 4
-
+            //alters position by 1px each millisecond, producing smooth animation
             function moveCard4() {
                 y = 200;
                 if (x > 650 && x <= 1300) {
                     x--;
                 }
+                //flips card over when in position
                 if (x == 650 && y == 200) {
                     card4.style.backgroundColor = 'red';
                 }
@@ -101,13 +106,13 @@ function pageLoad() {
                 card4.style.top = y + "px";
             }
         } else {
-            alert('it done broke')
+            console.log('it done broke')
         }
     }
 
     //RENAME VARIABLES & ATTACH TO VALUES
-//game mechanics-check card played against rules and issue appropriate responses
-//checks card is of correct suit or value, and issues penalty if not
+    //game mechanics-check card played against rules and issue appropriate responses
+    //checks card is of correct suit or value, and issues penalty if not
     function checkplayedcard(cardsuit, cardvalue, lastcardsuit, lastcardvalue, currentplayer) {
         if ((cardsuit != lastcardsuit) && (cardvalue != lastcardvalue)) {
             //penalties(true, currentplayer)
@@ -205,7 +210,7 @@ function pageLoad() {
     }
 
     btn2.onclick = function () {
-        var result = e.options[e.selectedIndex].label
+        var result = option.options[option.selectedIndex].label
         alert(result)
         var complete = false
         for (var i = 0; i < 5; i++) {
