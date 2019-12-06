@@ -5,8 +5,11 @@ function pageLoad() {
     console.log("Page load running");
 
     //variables!
-    var currentplayer = (count % 4)
-    var handsize = 5
+
+    var count = 0;
+    var turnend = false;
+    var currentplayer
+    var handsize = [5, 5, 5, 5]
     var cardsuit
     var cardvalue
     var lastcardsuit
@@ -16,7 +19,6 @@ function pageLoad() {
     var cpuresponses = []
     var playerresponses = []
     var btn = document.getElementById("Play");
-    var count = 0;
     var playdirection = 'forwards'
     var btn2 = document.getElementById("go");
     var option = document.getElementById("playeroptions")
@@ -24,6 +26,7 @@ function pageLoad() {
 
     //moves the cards from relevant pile to centre
     btn.onclick = function () {
+        currentplayer = count % 4
         //sets count ready for next turn, depending on direction of play
         if (playdirection == 'forwards') {
             count++
@@ -39,8 +42,8 @@ function pageLoad() {
         var x = 0;
         var y = 0;
         //moves relevant player's card
-        if (currentplayer == 1) {
-            var card = document.getElementById("card")
+        if (currentplayer == 0) {
+            var card = document.getElementById("card");
             var s = setInterval(moveCard1, 1);
             y = 200;
             //alters position by 1px each millisecond, producing smooth animation
@@ -55,7 +58,7 @@ function pageLoad() {
                 card.style.left = x + "px";
                 card.style.top = y + "px";
             }
-        } else if (currentplayer == 2) {
+        } else if (currentplayer == 1) {
             var card2 = document.getElementById("card2");
             var s = setInterval(moveCard2, 1);
             x = 650;
@@ -71,7 +74,7 @@ function pageLoad() {
                 card2.style.left = x + "px";
                 card2.style.top = y + "px";
             }
-        } else if (currentplayer == 0) {
+        } else if (currentplayer == 3) {
             var card3 = document.getElementById("card3");
             var s = setInterval(moveCard3, 1);
             y = 400;
@@ -88,7 +91,7 @@ function pageLoad() {
                 card3.style.left = x + "px";
                 card3.style.top = y + "px";
             }
-        } else if (currentplayer == 3) {
+        } else if (currentplayer == 2) {
             var card4 = document.getElementById("card4")
             var s = setInterval(moveCard4, 1);
             x = 1300;
@@ -110,17 +113,28 @@ function pageLoad() {
         }
     }
 
-    //RENAME VARIABLES & ATTACH TO VALUES
+    //ATTACH TO API STUFF
+    //CHANGE CARDS TO MOVING ON CLICK
+    //ASSIGN CARDS TO OBJECTS (+ comp equivalent)
+    //ADD RETURNING OFFENDING CARD TO HAND WHERE APPLICABLE TO PENALTIES()
+
+
+    //CHANGE HAND SIZE SO THAT IT TRACKS EVERY PLAYER AS CURRENTLY ONLY ONE-done?
+    //MAKE SURE RESPONSES DELETE FROM ARRAY WHEN FALSE-done?
+    // IF CARD DOESN'T MATCH END TURN AFTER PENALTY-done?
+
     //game mechanics-check card played against rules and issue appropriate responses
     //checks card is of correct suit or value, and issues penalty if not
     function checkplayedcard(cardsuit, cardvalue, lastcardsuit, lastcardvalue, currentplayer) {
         if ((cardsuit != lastcardsuit) && (cardvalue != lastcardvalue)) {
-            //penalties(true, currentplayer)
+            penalties(true, currentplayer)
+            turnend=true;
         }
     }
 
     //checks card value against those with particular rules when played/ followed on from
-    function specialcards(cardsuit, cardvalue, lastcardvalue, count, currentplayer){
+    function specialcards(cardsuit, cardvalue, lastcardvalue, count, currentplayer, turnend){
+        if(turnend == false) {
         //checks if message printed when 7 played the turn before
         if (lastcardvalue == 7){
             //automates non-user turna
@@ -128,10 +142,10 @@ function pageLoad() {
                 //allows for 20% chance of failure, so user can see rules broken to learn them, gives penalty if broken
                 if (Math.random() >= 0.2){
                     alert("[thank you]")
-                } else {/*penalties(true, currentplayer)*/}
+                } else {penalties(true, currentplayer)}
             } else {
                 //runs user response check after 10 seconds
-                //       setTimeout(userafter7, 10000)
+                setTimeout(userafter7, 10000)
             }
         }
         switch (cardvalue){
@@ -142,10 +156,10 @@ function pageLoad() {
                     //allows for 20% chance of failure, so user can see rules broken to learn them, gives penalty if broken
                     if (Math.random() >= 0.2){
                         alert("[have a nice day]")
-                    } else {/*penalties(true, currentplayer)*/}
+                    } else {penalties(true, currentplayer)}
                 } else {
                     //runs user response check after 10 seconds
-//                    setTimeout(userplayed7, 10000)
+                   setTimeout(userplayed7, 10000)
                 }
                 break
             case 'A':
@@ -163,15 +177,16 @@ function pageLoad() {
         if (cardsuit == 'S') {
             if (Math.random() >= 0.2) {
                 alert(cardvalue + " of " + cardsuit)
-            } else {/*penalties(true, currentplayer)*/}
+            } else {penalties(true, currentplayer)}
         }
-    }
+    } }
 
     //checks for response when player on last card
-    function lastcard(handsize, currentplayer) {
+    function lastcard(handsize, currentplayer, turnend) {
+        if (turnend == false){
         //automates non-user turns
         if (currentplayer != 2) {
-            if (handsize == 1) {
+            if (handsize[currentplayer] == 1) {
                 //allows for 20% chance of failure, so user can see rules broken to learn them, gives penalty if broken
                 if (Math.random() >= 0.2) {
                     alert("[last card message]");
@@ -179,9 +194,9 @@ function pageLoad() {
             }
             //runs user response check after 10 seconds
         } else {
-            //setTimeout(useerlastcard, 10000)
+            setTimeout(useerlastcard, 10000)
         }
-    }
+    } }
 
     function jacks() {
         if (Math.random() >= 0.2) {
@@ -230,13 +245,18 @@ function pageLoad() {
                 response = true
             } response = false
         }
-        setTimeout(timedout(), 10000)
+        setTimeout(timedout(input), 10000)
         //delay not working???
         alert(response)
     }
 
-    function timedout(){
+    function timedout(input){
         response = false
+        for (var i = 0; i <5; i++){
+            if (playerresponses[i] == input) {
+                playerresponses[i] = ""
+            }
+        }
     }
 
     //checks whether user has responded by the end of the 10 second window
@@ -244,7 +264,7 @@ function pageLoad() {
         //issues penalty if not
         if (checkinputs('lastresponse') == false) {
             alert("working")
-//            penalties(true, currentplayer)
+            penalties(true, currentplayer)
         }
     }
 
@@ -252,7 +272,7 @@ function pageLoad() {
     function usererafter7() {
         //issues penalty if not
         if (checkinputs('after7response')==false) {
- //           penalties(true, currentplayer)
+            penalties(true, currentplayer)
         }
     }
 
@@ -260,7 +280,17 @@ function pageLoad() {
     function userplayed7() {
         //issues penalty if not
         if (checkinputs('sevenplay')==false) {
- //           penalties(true, currentplayer)
+            penalties(true, currentplayer)
         }
+    }
+
+    function penalties(rulebroken, currentplayer, source) {
+        if (source == "checkplayercard") {
+            //move card back to hand
+            handsize[currentplaeyr] ++
+        }
+        alert("[penalty message]")
+        handsize[currentplayer]++
+        //move card to hand from drawpile & add info to hand
     }
 }
