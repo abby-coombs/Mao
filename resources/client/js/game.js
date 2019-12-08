@@ -6,42 +6,59 @@ function pageLoad() {
 
     //variables!
 
-    var count = 0;
+    var count;
     var turnend = false;
-    var currentplayer
-    var discardx = 650
-    var discardy = 200
-    var drawx
-    var drawy
-    var playerx=[0,650, 1300, 650]
-    var playery=[200, 0, 200, 400]
-    var handsize = [5, 5, 5, 5]
-    var cardsuit
-    var cardvalue
-    var lastcardsuit
-    var lastcardvalue
-    var possiblesuit
-    var rulebroken
-    var cpuresponses = []
-    var playerresponses = []
+    var currentplayer;
+    var handsize = [5, 5, 5, 5];
+    var cardsuit;
+    var cardvalue;
+    var lastcardsuit;
+    var lastcardvalue;
+    var possiblesuit;
+    var rulebroken;
+    var cpuresponses = [];
+    var playerresponses = [];
     var btn = document.getElementById("Play");
-    var playdirection = 'forwards'
+    var playdirection = 'forwards';
     var btn2 = document.getElementById("go");
-    var option = document.getElementById("playeroptions")
-    var playersaid = option.options[option.selectedIndex].value
+    var option = document.getElementById("playeroptions");
+    var firstturn = true;
+    var playersaid = option.options[option.selectedIndex].value;
+
+
+    CARD.onclick = function() {
+        function turn(currentplayer) {
+            if ((firstturn == true) || (turnend[currentplayer-1] = true)){
+                turnend[currentplayer] = false;
+                firstturn = false;
+                playcard(currentplayer);
+                if(played == true){
+                    played = false;
+                    checkplayedcard();
+                    if (turnend == false) {
+                        specialcards();
+                        if (completed == true)
+                            completed = false;
+                            turnend[currentplayer] = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     //moves the cards from relevant pile to centre
     btn.onclick = function () {
-        currentplayer = count % 4
+        currentplayer = count % 4;
         //sets count ready for next turn, depending on direction of play
         if (playdirection == 'forwards') {
-            count++
+            count++;
         } else {
-            count--
+            count--;
         }
         //ensures count % 4 between 0 and 3
         while (count < 0) {
-            count += 4
+            count += 4;
         }
         //sets initial position of card pile
         //CHANGE SO THAT EACH PLAYER HAS PILE, PLUS DRAWPILE!
@@ -49,9 +66,9 @@ function pageLoad() {
         var y = 0;
         //moves relevant player's card
         if (currentplayer == 0) {
-            var card = document.getElementById("card");
+            var card = document.getElementById("cpu0card");
             var s = setInterval(moveCard1, 1);
-            y = 200;
+            alert('!')
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard1() {
                 if (x >= 0 && x < 650) {
@@ -65,9 +82,8 @@ function pageLoad() {
                 card.style.top = y + "px";
             }
         } else if (currentplayer == 1) {
-            var card2 = document.getElementById("card2");
+            var card2 = document.getElementById("cpu1card");
             var s = setInterval(moveCard2, 1);
-            x = 650;
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard2() {
                 if (y >= 0 && y < 200) {
@@ -81,10 +97,8 @@ function pageLoad() {
                 card2.style.top = y + "px";
             }
         } else if (currentplayer == 3) {
-            var card3 = document.getElementById("card3");
+            var card3 = document.getElementById("card4");
             var s = setInterval(moveCard3, 1);
-            y = 400;
-            x = 650;
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard3() {
                 if (y > 200 && y <= 400) {
@@ -98,12 +112,10 @@ function pageLoad() {
                 card3.style.top = y + "px";
             }
         } else if (currentplayer == 2) {
-            var card4 = document.getElementById("card4")
+            var card4 = document.getElementById("cpu2card")
             var s = setInterval(moveCard4, 1);
-            x = 1300;
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard4() {
-                y = 200;
                 if (x > 650 && x <= 1300) {
                     x--;
                 }
@@ -189,8 +201,7 @@ function pageLoad() {
     }
 
     //checks for response when player on last card
-    function lastcard(handsize, currentplayer, turnend) {
-        if (turnend == false){
+    function lastcard(handsize, currentplayer) {
         //automates non-user turns
         if (currentplayer != 2) {
             if (handsize[currentplayer] == 1) {
@@ -203,7 +214,7 @@ function pageLoad() {
         } else {
             setTimeout(useerlastcard, 10000)
         }
-    } }
+    }
 
     function jacks() {
         if (Math.random() >= 0.2) {
@@ -251,7 +262,7 @@ function pageLoad() {
             x = 650;
             switch(currentplayer) {
                 case 0:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("cpu0card");
                     var s = setInterval(moveCardback, 1);
                     card.style.backgroundColor = 'red';
                     alert('check')
@@ -267,7 +278,7 @@ function pageLoad() {
                     }
                     break
                 case 1:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("");
                     var s = setInterval(moveCardback1, 1);
                     card.style.backgroundColor = 'red';
                     function moveCardback1() {
@@ -282,7 +293,7 @@ function pageLoad() {
                       }
                     break
                 case 2:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("");
                     var s = setInterval(moveCardback2, 1);
                     card.style.backgroundColor = 'red';
                 function moveCardback2() {
@@ -297,7 +308,7 @@ function pageLoad() {
                 }
                     break
                 case 3:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("");
                     var s = setInterval(moveCardback3, 1);
                     card.style.backgroundColor = 'red';
                 function moveCardback3() {
@@ -318,7 +329,7 @@ function pageLoad() {
             x = 750
             switch(currentplayer) {
                 case 0:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("cpu0card");
                     var s = setInterval(moveCardback, 1);
                     card.style.backgroundColor = 'red';
                     alert('check')
@@ -334,7 +345,7 @@ function pageLoad() {
                 }
                     break
                 case 1:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("");
                     var s = setInterval(moveCardback1, 1);
                     card.style.backgroundColor = 'red';
                     function moveCardback1() {
@@ -352,7 +363,7 @@ function pageLoad() {
                 }
                     break
                 case 2:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("");
                     var s = setInterval(moveCardback2, 1);
                     card.style.backgroundColor = 'red';
                 function moveCardback2() {
@@ -367,7 +378,7 @@ function pageLoad() {
                 }
                     break
                 case 3:
-                    var card = document.getElementById("card");
+                    var card = document.getElementById("");
                     var s = setInterval(moveCardback3, 1);
                     card.style.backgroundColor = 'red';
                 function moveCardback3() {
@@ -443,4 +454,3 @@ function pageLoad() {
         handsize[currentplayer]++
         movecardback('draw')
     }
-}
