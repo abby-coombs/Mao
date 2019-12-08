@@ -9,6 +9,12 @@ function pageLoad() {
     var count = 0;
     var turnend = false;
     var currentplayer
+    var discardx = 650
+    var discardy = 200
+    var drawx
+    var drawy
+    var playerx=[0,650, 1300, 650]
+    var playery=[200, 0, 200, 400]
     var handsize = [5, 5, 5, 5]
     var cardsuit
     var cardvalue
@@ -111,6 +117,7 @@ function pageLoad() {
         } else {
             console.log('it done broke')
         }
+        checkplayedcard('H', 6, 8, 'S', 2)
     }
 
     //ATTACH TO API STUFF
@@ -130,11 +137,11 @@ function pageLoad() {
             penalties(true, currentplayer)
             turnend=true;
         }
+        if (turnend == false){specialcards(cardsuit, cardvalue, lastcardvalue, count, currentplayer)}
     }
 
     //checks card value against those with particular rules when played/ followed on from
-    function specialcards(cardsuit, cardvalue, lastcardvalue, count, currentplayer, turnend){
-        if(turnend == false) {
+    function specialcards(cardsuit, cardvalue, lastcardvalue, count, currentplayer){
         //checks if message printed when 7 played the turn before
         if (lastcardvalue == 7){
             //automates non-user turna
@@ -179,7 +186,7 @@ function pageLoad() {
                 alert(cardvalue + " of " + cardsuit)
             } else {penalties(true, currentplayer)}
         }
-    } }
+    }
 
     //checks for response when player on last card
     function lastcard(handsize, currentplayer, turnend) {
@@ -238,6 +245,149 @@ function pageLoad() {
         }
     }
 
+    function movecardback(movefrom) {
+        if (movefrom == 'discard') {
+            y = 200;
+            x = 650;
+            switch(currentplayer) {
+                case 0:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback, 1);
+                    card.style.backgroundColor = 'red';
+                    alert('check')
+                    function moveCardback() {
+                        if (x > 0 && x <= 650) {
+                            x--;
+                        }
+                        if ((x == 0) && (y == 200)){
+                            card.style.backgroundColor = 'green';
+                        }
+                        card.style.left = x + 'px'
+                        card.style.top = y + 'px'
+                    }
+                    break
+                case 1:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback1, 1);
+                    card.style.backgroundColor = 'red';
+                    function moveCardback1() {
+                    if (y > 0 && y <= 200) {
+                        y--;
+                    }
+                    if ((x == 650) && (y == 0)){
+                        card.style.backgroundColor = 'green';
+                    }
+                    card.style.left = x + 'px'
+                    card.style.top = y + 'px'
+                      }
+                    break
+                case 2:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback2, 1);
+                    card.style.backgroundColor = 'red';
+                function moveCardback2() {
+                    if (x >= 650 && x < 1300) {
+                        x++;
+                    }
+                    if ((x == 1300) && (y == 200)){
+                        card.style.backgroundColor = 'green';
+                    }
+                    card.style.left = x + 'px'
+                    card.style.top = y + 'px'
+                }
+                    break
+                case 3:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback3, 1);
+                    card.style.backgroundColor = 'red';
+                function moveCardback3() {
+                    if (y > 0 && y <= 200) {
+                        y--;
+                    }
+                    if ((x == 650) && (y == 0)){
+                        card.style.backgroundColor = 'green';
+                    }
+                    card.style.left = x + 'px'
+                    card.style.top = y + 'px'
+                }
+                    break
+            }
+        } else if (movefrom == 'draw') {
+            //BEING SORTA WEIRD FIX IT!!
+            y= 200
+            x = 750
+            switch(currentplayer) {
+                case 0:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback, 1);
+                    card.style.backgroundColor = 'red';
+                    alert('check')
+                function moveCardback() {
+                    if (x > 0 && x <= 750) {
+                        x--;
+                    }
+                    if ((x == 0) && (y == 200)){
+                        card.style.backgroundColor = 'green';
+                    }
+                    card.style.left = x + 'px'
+                    card.style.top = y + 'px'
+                }
+                    break
+                case 1:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback1, 1);
+                    card.style.backgroundColor = 'red';
+                    function moveCardback1() {
+                    if (y > 0 && y <= 200) {
+                        y--;
+                    }
+                    if (x > 650 && x <= 750) {
+                        x--;
+                    }
+                    if ((x == 650) && (y == 0)){
+                        card.style.backgroundColor = 'green';
+                    }
+                    card.style.left = x + 'px'
+                    card.style.top = y + 'px'
+                }
+                    break
+                case 2:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback2, 1);
+                    card.style.backgroundColor = 'red';
+                function moveCardback2() {
+                    if (x >= 650 && x < 1300) {
+                        x++;
+                    }
+                    if ((x == 1300) && (y == 200)){
+                        card.style.backgroundColor = 'green';
+                    }
+                    card.style.left = x + 'px'
+                    card.style.top = y + 'px'
+                }
+                    break
+                case 3:
+                    var card = document.getElementById("card");
+                    var s = setInterval(moveCardback3, 1);
+                    card.style.backgroundColor = 'red';
+                function moveCardback3() {
+                    if (y > 0 && y <= 200) {
+                        y--;
+                    }
+                    if (x > 650 && x <= 750) {
+                        x--;
+                    }
+                    if ((x == 650) && (y == 0)){
+                        card.style.backgroundColor = 'green';
+                    }
+                    card.style.left = x + 'px'
+                    card.style.top = y + 'px'
+                }
+                    break
+            }
+        }
+    }
+
     var response = true
     function checkinputs(input) {
         for (var i = 0; i <5; i++){
@@ -286,11 +436,11 @@ function pageLoad() {
 
     function penalties(rulebroken, currentplayer, source) {
         if (source == "checkplayercard") {
-            //move card back to hand
-            handsize[currentplaeyr] ++
+            movecardback('discard')
+            handsize[currentplayer] ++
         }
         alert("[penalty message]")
         handsize[currentplayer]++
-        //move card to hand from drawpile & add info to hand
+        movecardback('draw')
     }
 }
