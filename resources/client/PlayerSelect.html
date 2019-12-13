@@ -2,12 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Mao Player Select</title>
+    <script src="/client/js/playerselect.js"></script>
 </head>
-<body>
+<body onload="pageLoad()">
 <h1 style = "font-size:60px;text-align:center">Select Player</h1>
 <h2 style = "font-size:30px; text-align:left; margin-left: 300px">Existing player</h2>
 <div style = "font-size: 15px; text-align:left; margin-left: 300px; display:inline-block">Select player: </div>
-<select style = "display:inline-block">
+<select style = "display:inline-block" id="playerSelector">
 
 </select>
 <button style = "font-size: 15px; text-align:left; display:inline-block">Confirm</button>
