@@ -26,7 +26,8 @@ function pageLoad() {
     let playersaid = option.options[option.selectedIndex].value;
 
 
-    CARD.onclick = function () {
+
+   /* CARD.onclick = function () {
         function turn(currentplayer) {
             if ((firstturn == true) || (turnend[currentplayer - 1] = true)) {
                 turnend[currentplayer] = false;
@@ -44,12 +45,14 @@ function pageLoad() {
                 }
             }
         }
-    }
+    }*/
 
 
     //moves the cards from relevant pile to centre
     btn.onclick = function () {
+        if(typeof count != 'undefined') {} else {count = 0}
         currentplayer = count % 4;
+            alert(count)
         //sets count ready for next turn, depending on direction of play
         if (playdirection == 'forwards') {
             count++;
@@ -62,13 +65,12 @@ function pageLoad() {
         }
         //sets initial position of card pile
         //CHANGE SO THAT EACH PLAYER HAS PILE, PLUS DRAWPILE!
-        var x = 0;
-        var y = 0;
         //moves relevant player's card
         if (currentplayer == 0) {
-            var card = document.getElementById("cpu0card");
-            var s = setInterval(moveCard1, 1);
-
+            let card = document.getElementById("cpupos0card");
+            let s = setInterval(moveCard1, 1);
+            x = card.style.left;
+            y = card.style.top;
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard1() {
                 if (x >= 0 && x < 650) {
@@ -82,9 +84,10 @@ function pageLoad() {
                 card.style.top = y + "px";
             }
         } else if (currentplayer == 1) {
-            var card2 = document.getElementById("cpu1card");
-            var s = setInterval(moveCard2, 1);
-
+            let card2 = document.getElementById("cpupos1card");
+            let s = setInterval(moveCard2, 1);
+            x = card2.style.left;
+            y = card2.style.top;
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard2() {
                 if (y >= 0 && y < 200) {
@@ -98,9 +101,10 @@ function pageLoad() {
                 card2.style.top = y + "px";
             }
         } else if (currentplayer == 3) {
-            var card3 = document.getElementById("card4");
-            var s = setInterval(moveCard3, 1);
-
+            let card3 = document.getElementById("usercardpos1");
+            let s = setInterval(moveCard3, 1);
+            x = card3.style.left;
+            y = card3.style.top;
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard3() {
                 if (y > 200 && y <= 400) {
@@ -114,9 +118,10 @@ function pageLoad() {
                 card3.style.top = y + "px";
             }
         } else if (currentplayer == 2) {
-            var card4 = document.getElementById("cpu2card")
-            var s = setInterval(moveCard4, 1);
-
+            let card4 = document.getElementById("cpupos2card")
+            let s = setInterval(moveCard4, 1);
+            x = card4.style.left;
+            y = card4.style.top;
             //alters position by 1px each millisecond, producing smooth animation
             function moveCard4() {
                 if (x > 650 && x <= 1300) {
@@ -134,7 +139,7 @@ function pageLoad() {
         }
         checkplayedcard('H', 6, 8, 'S', 2);
     }
-}
+
 
 //ATTACH TO API STUFF
 //CHANGE CARDS TO MOVING ON CLICK
@@ -457,4 +462,5 @@ function penalties(rulebroken, currentplayer, source) {
     alert("[penalty message]")
     handsize[currentplayer]++
     movecardback('draw')
+}
 }
