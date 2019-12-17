@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 public class Card {
     public static void selectPlayer(){
         try{
-            PreparedStatement ps = Server.Main.db.prepareStatement("SELECT * FROM Cardss"); /*(WHERE ...)*/
+            PreparedStatement ps = Server.Main.db.prepareStatement("SELECT * FROM Cards"); /*(WHERE ...)*/
             ResultSet results = ps.executeQuery();
             while (results.next()){
                 int cardID = results.getInt(1);

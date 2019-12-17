@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Mao Player Select</title>
+    <title>Player Select</title>
     <script src="/client/js/playerselect.js"></script>
 </head>
 <body onload="pageLoad()">
@@ -9,12 +9,15 @@
 <h2 style = "font-size:30px; text-align:left; margin-left: 300px">Existing player</h2>
 <div style = "font-size: 15px; text-align:left; margin-left: 300px; display:inline-block">Select player: </div>
 <select style = "display:inline-block" id="playerSelector">
-
 </select>
-<button style = "font-size: 15px; text-align:left; display:inline-block">Confirm</button>
+<button id = 'confirmplayer' style = "font-size: 15px; text-align:left; display:inline-block">Confirm</button>
 <h2 style = "font-size:30px; text-align:left; margin-left: 300px">New player</h2>
-<div style = "font-size: 15px; text-align:left; margin-left: 300px; display:inline-block">Name/Useername: </div>
-<textarea style = "height: 15px; margin-top: 5px"></textarea>
-<button style = "font-size: 15px; text-align:left; display:inline-block">Confirm</button>
+<div style = "font-size: 15px; text-align:left; margin-left: 300px; display:inline-block">Name/Username: </div>
+<textarea id = 'newplayerinput' style = "height: 15px; margin-top: 5px"></textarea>
+<button id = 'confirmnewplayer' style = "font-size: 15px; text-align:left; display:inline-block">Confirm</button>
+<h2 style = "font-size:30px; text-align:left; margin-left: 300px">Update name [select current user from above]</h2>
+<div style = "font-size: 15px; text-align:left; margin-left: 300px; display:inline-block">New name: </div>
+<textarea id = 'updateplayerinput' style = "height: 15px; margin-top: 5px"></textarea>
+<button id = 'confirmupdateplayer' style = "font-size: 15px; text-align:left; display:inline-block">Confirm</button>
 </body>
 </html>

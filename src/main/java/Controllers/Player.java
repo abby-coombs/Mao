@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-@Path("v")
+@Path("Player")
 //creates handler
 public class Player {
     @POST
