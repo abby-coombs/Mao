@@ -3,6 +3,7 @@ cards being weird??????
 assign db info to cards?
 fix api calls for playerselect
 make the png display right in adpage
-
-once cards connected,, shuffle/deal!!!
+connect cards to shuffle!
+check all needed cpu responses covered
+btn2.onclick: Add complete = false after 10 sec; add/call(?) 'no talking' penalty where needed
 add game win thing
