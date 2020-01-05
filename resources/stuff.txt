@@ -1,9 +1,16 @@
-Pass json as query on url!!!!
+Code stuff:
+FIX PLAYER CARD (HTML + JS)
+CHANGE CARDS TO IMAGES NOT COLOURS
+FINISH CARDSHUFFLE
+FINISH PENALTIES
+playerselect.js needs work
+Finish win/lose link (Pass json as query on url!!!!)
 cards being weird??????
-assign db info to cards?
-fix api calls for playerselect
-make the png display right in adpage
-connect cards to shuffle!
-check all needed cpu responses covered
-btn2.onclick: Add complete = false after 10 sec; add/call(?) 'no talking' penalty where needed
-add game win thing
+btn2.onclick: FIX complete = false after 10 sec
+    add/call(?) 'no talking' penalty where needed?
+ADD GAME RESET IN!!!
+
+General stuff:
+UPDATE DATA DICTIONARY
+Test phase 3
+Document everything

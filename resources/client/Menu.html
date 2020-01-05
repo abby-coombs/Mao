@@ -5,18 +5,20 @@
     <title>Menu</title>
 </head>
 <body>
+<!--creates page elements, with inline CSS for styling and links to other pages included-->
 <h1 style = "font-size:60px;text-align:center;">Menu</h1>
 <div style = text-align:center>
-<a href = "/client/mainpage.html"; style = "font-size:30px; text-align:center; text-decoration: underline">New game [replay icon] (links)</a>
+<a href = "/client/mainpage.html"; style = "font-size:30px; text-align:center; text-decoration: underline">New game [replay icon?]</a>
 <p/>
-<a href = "/client/PlayerSelect.html"; style = "font-size:30px; text-align:center; text-decoration: underline">Change player [profile icon] (links)</a>
+<a href = "/client/PlayerSelect.html"; style = "font-size:30px; text-align:center; text-decoration: underline">Change player [profile icon?]</a>
 </div>
 <script>
-    var newgamelink = document.getElementById(newgamelink);
+    //makes the links actually redirect to the relevant pages on the server
+    const newgamelink = document.getElementById(newgamelink);
     newgamelink.onclick = function() {
-        window.location.pathname = "client/mainpage.html" //est. that game clears/restarts
+        window.location.pathname = "client/mainpage.html"
     }
-    var playerchangelink = document.getElementById(playerchangelink);
+    const playerchangelink = document.getElementById(playerchangelink);
     playerchangelink.onclick = function() {
         window.location.pathname = 'client/PlayerSelect'
     }

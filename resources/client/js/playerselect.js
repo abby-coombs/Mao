@@ -1,7 +1,9 @@
 function pageLoad() {
+    //gets input from webpage
     const playerSelector = document.getElementById("playerSelector");
     let inputtext = document.getElementById('newplayerinput').value;
     let inputupdate = document.getElementById('updateplayerinput').value;
+    //populates option list on page with player names from database
     fetch("/Player/list", {method: 'get'}
     ).then(response => response.json()
     ).then(listOfPlayers => {
@@ -11,14 +13,15 @@ function pageLoad() {
         }
         playerSelector.innerHTML = optionList;
     });
+    //prints the option the player selected
     document.getElementById('confirmplayer').onclick = function() {
         let result = playerSelector.options[playerSelector.selectedIndex].label;
         alert("selected: " + result)
-        //pass to mainpage
+        //PASS TO MAINPAGE
     }
+    //similar to selector above, but feeds from a different input
     document.getElementById('confirmnewplayer').onclick = function() {
         let result = inputtext
-        //not running?
         fetch('/Player/new', {method: 'post', body: inputtext}
         ).then(response => response.json()
         ).then(responseData => {
@@ -30,8 +33,8 @@ function pageLoad() {
     document.getElementById('confirmupdateplayer').onclick = function() {
         let currentname = playerSelector.options[playerSelector.selectedIndex].label;
         let result = inputupdate;
-        //get currentname associated ID
-        //post result as newname
+        //GET CORRESPONDING ID
+        //UPDATE THE THING
         alert('selected: ' + result)
     }
 }
