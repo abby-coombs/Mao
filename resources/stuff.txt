@@ -1,14 +1,11 @@
 Code stuff:
-FIX PLAYER CARD (HTML + JS)
 CHANGE CARDS TO IMAGES NOT COLOURS
 FINISH CARDSHUFFLE
 FINISH PENALTIES
 playerselect.js needs work
 Finish win/lose link (Pass json as query on url!!!!)
-cards being weird??????
 btn2.onclick: FIX complete = false after 10 sec
     add/call(?) 'no talking' penalty where needed?
-ADD GAME RESET IN!!!
 
 General stuff:
 UPDATE DATA DICTIONARY
