@@ -97,38 +97,22 @@ function pageLoad() {
             count = (count + 7) % 4; // effectively minus 1
         }
 
-        //UPDATE TO FIT LATER STUFF
         //moves relevant player's card
         console.log("Count is " + count + " and currentplayer is " + currentplayer);
 
         if (currentplayer == 0) {
 
             mode = 1;
-            //let x = ;
-            //let y = card.style.top;
-            //if (y=="") {y = 200};
-            //let movedone = false;
-            //alters position by 1px each millisecond, producing smooth animation
 
         } else if (currentplayer == 1) {
             mode = 2;
-            //x = card2.style.left;
-            //if (x=="") {x = 650}
-            //y = card2.style.top;
-            //alters position by 1px each millisecond, producing smooth animation
 
         } else if (currentplayer == 3) {
             mode = 3;
-            //x = 650
-            //y = 400
-            //alters position by 1px each millisecond, producing smooth animation
 
         } else if (currentplayer == 2) {
 
             mode = 4;
-            //x = 1250
-            //y = 200
-            ///alters position by 1px each millisecond, producing smooth animation
 
         } else {
             console.log('it done broke');
