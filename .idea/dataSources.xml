@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Users" uuid="dd30f64c-1207-45c1-8af5-89b9d96df984">
+    <data-source source="LOCAL" name="Users" uuid="383a6330-9be9-4ec2-a992-8f08470c2f5d">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Abby\IdeaProjects\mao\resources\Users.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\87749\IdeaProjects\Mao\resources\Users.db</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>

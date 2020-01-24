@@ -11,80 +11,84 @@ let card1, card2, card3, card4;
 function frame() {
 
     console.log(mode);
-
     switch (mode) {
         case 1:
-
             console.log("> " + card1.style.left);
-
+            //gets location to be changed
             let x = Number(card1.style.left.replace("px", ""));
-
+            //increments position
             card1.style.left = (x + 1) + "px";
-
+            //resets and continues game function when card in position
             if (x >=650) {
                 card1.style.left = "0px";
+                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
             }
             break;
         case 2:
             console.log("> " + card2.style.top);
+            //gets location to be changed
             let y = Number(card2.style.top.replace("px", ""));
-
+            //increments position
             card2.style.top = (y+1) + "px";
-
+            //resets and continues game function when card in position
             if ( y == 200) {
                 card2.style.top = "0px";
+                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
             }
-
             break;
-
         case 3:
             if (card3.style.top == ""){card3.style.top = 500 + "px"}
             console.log("> " + card3.style.top);
+            //gets location to be changed
             let y2 = Number(card3.style.top.replace("px", ""));
-
+            //increments position
             card3.style.top = (y2-1) + "px";
-
+            //resets and continues game function when card in position
             if (y2 == 200) {
                 card3.style.top = 500 + "px";
+                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
             }
-
             break;
         case 4:
             if (card4.style.left == ""){card4.style.left = 1250 + "px"}
             console.log("> " + card4.style.left);
+            //gets location to be changed
             let x2 = Number(card4.style.left.replace("px", ""));
-
+            //increments position
             card4.style.left = (x2 - 1) + "px";
-
+            //resets and continues game function when card in position
             if (x2 == 650) {
                 card4.style.left = 1250 + "px"
+                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
             }
-
             break;
         default:
-
             // Twiddle your thumbs.
-
     }
-
+    //continues animation
     window.requestAnimationFrame(frame);
-
 }
 
 function pageLoad() {
     console.log("Page load running");
-
+    //rests all variables to default values at start of game
     reset();
 
     btn.addEventListener("click", function () {
+        //responds generally faster/more reliably than onclick(), but functions in pretty much the same way
+
         //covers past issue of undefined count which prevented cards functioning
         if(typeof count == 'undefined') count = 0;
 
@@ -97,26 +101,21 @@ function pageLoad() {
             count = (count + 7) % 4; // effectively minus 1
         }
 
-        //moves relevant player's card
         console.log("Count is " + count + " and currentplayer is " + currentplayer);
 
+        //changes the mode of the animation frame (enabling cards to move)
         if (currentplayer == 0) {
-
             mode = 1;
-
         } else if (currentplayer == 1) {
             mode = 2;
-
         } else if (currentplayer == 3) {
             mode = 3;
-
         } else if (currentplayer == 2) {
-
             mode = 4;
-
         } else {
             console.log('it done broke');
         }
+        //continues program flow
         checkplayedcard('H', 6, 8, 'S', 2);
     });
 
@@ -125,6 +124,7 @@ function pageLoad() {
         //gets input from response dropdown
         let result = option.options[option.selectedIndex].label;
         alert(result);
+        //informs player they have successfully responded
         let complete = false;
         //logs copy of response in recent responses to check against when cards played
         if (currentplayer == 3) {
@@ -141,7 +141,7 @@ function pageLoad() {
                 }
             }
             //FINISH/EDIT
-        } penalties(true, 3, "talking")
+        } penalties(true, 3, "talking") //penalises user if 'speaking' on another player's turn
     });
 
 }
@@ -168,16 +168,14 @@ function reset() {
     drawpile = [];
     response = true;
     mode = 0;
-
     card1 = document.getElementById("cpupos0card");
     card2 = document.getElementById("cpupos1card");
     card3 = document.getElementById("usercard");
     card4 = document.getElementById("cpupos2card");
-
+    //starts animation frame
     window.requestAnimationFrame(frame);
-
+    //starts game setup/flow
     cardshuffle();
-
 }
 
 //SOME STUFF TO EDIT/FIX
@@ -196,6 +194,7 @@ function cardshuffle() {
         testarr[i] = testarr[j]
         testarr[j] = temp
     }
+    //continues program flow
     carddeal(testarr)
 }
 
@@ -223,6 +222,7 @@ function carddeal(cardarr) {
         drawpile[i-29] = cardarr [i]
         cardarr[i] = ''
     }
+    //continues program flow
     usercards(userhand)
 }
 
@@ -230,13 +230,14 @@ function carddeal(cardarr) {
 function usercards(userhand) {
     let optionList = ""
     for (let i = 0; i < userhand.length, i ++;){
-        alert(userhand[i])
+        alert(userhand[i])  //?
         optionList += `<option value = ${i}>${userhand[i]}</option>`
+        //populates option list with player names from database
     }
     document.getElementById("cardselector").innerHTML = optionList
 }
 
-//set onclick to disabled before here!)
+//set onclick to disabled before here! ?
 
 
 function checkplayedcard(cardsuit, cardvalue, lastcardsuit, lastcardvalue, currentplayer) {
