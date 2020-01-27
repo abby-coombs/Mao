@@ -2,7 +2,7 @@
 
 let count, turnend, currentplayer, handsize, cardsuit, cardvalue, lastcardsuit, lastcardvalue, possiblesuit;
 let rulebroken, cpuresponses, playerresponses, btn, playdirection,  btn2, option, firstturn, playersaid;
-let testarr, p1hand, p2hand, p3hand, userhand, discardpile, drawpile, response;
+let bigarr, p1hand, p2hand, p3hand, userhand, discardpile, drawpile, response;
 
 let card1, card2, card3, card4;
 
@@ -21,7 +21,7 @@ function frame() {
             //resets and continues game function when card in position
             if (x >=650) {
                 card1.style.left = "0px";
-                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                document.getElementById("discard").style.backgroundImage  = discardimg
                 //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
@@ -36,7 +36,7 @@ function frame() {
             //resets and continues game function when card in position
             if ( y == 200) {
                 card2.style.top = "0px";
-                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                document.getElementById("discard").style.backgroundImage  = discardimg
                 //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
@@ -52,7 +52,7 @@ function frame() {
             //resets and continues game function when card in position
             if (y2 == 200) {
                 card3.style.top = 500 + "px";
-                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                document.getElementById("discard").style.backgroundImage  = discardimg
                 //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
@@ -68,7 +68,7 @@ function frame() {
             //resets and continues game function when card in position
             if (x2 == 650) {
                 card4.style.left = 1250 + "px"
-                document.getElementById("discard").style.backgroundImage  = "" //ADD image here!!
+                document.getElementById("discard").style.backgroundImage  = discardimg
                 //identifies element from html doc to change/interact with, and what changes to make
                 mode = 0;
                 checkplayedcard()
@@ -88,7 +88,8 @@ function pageLoad() {
 
     btn.addEventListener("click", function () {
         //responds generally faster/more reliably than onclick(), but functions in pretty much the same way
-
+        if (gameready == true) {
+        //ensures click only runs code if game set up
         //covers past issue of undefined count which prevented cards functioning
         if(typeof count == 'undefined') count = 0;
 
@@ -105,19 +106,23 @@ function pageLoad() {
 
         //changes the mode of the animation frame (enabling cards to move)
         if (currentplayer == 0) {
+            chooseplayercard("p1")
             mode = 1;
         } else if (currentplayer == 1) {
+            chooseplayercard("p2")
             mode = 2;
         } else if (currentplayer == 3) {
+            //user thing
             mode = 3;
         } else if (currentplayer == 2) {
+            chooseplayercard("p3")
             mode = 4;
         } else {
             console.log('it done broke');
         }
         //continues program flow
         checkplayedcard('H', 6, 8, 'S', 2);
-    });
+    }});
 
 //!
     btn2.addEventListener("click", function () {
@@ -159,13 +164,13 @@ function reset() {
     option = document.getElementById("playeroptions");
     firstturn = true;
     playersaid = option.options[option.selectedIndex].value;
-    testarr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
-    p1hand = [];
-    p2hand = [];
-    p3hand = [];
-    userhand = [];
-    discardpile = [];
-    drawpile = [];
+    bigarr = [][]; //REPLACE W/ DB VERSION
+    p1hand = [][];
+    p2hand = [][];
+    p3hand = [][];
+    userhand = [][];
+    discardpile = [][];
+    drawpile = [][];
     response = true;
     mode = 0;
     card1 = document.getElementById("cpupos0card");
@@ -178,49 +183,88 @@ function reset() {
     cardshuffle();
 }
 
-//SOME STUFF TO EDIT/FIX
+//TEST THIS BIT ASAP!!
 function cardshuffle() {
     fetch("/Card/list", {method: 'get'}
+    //establishes request type/method
     ).then(response => response.json()
+        //obtains/parses response
     ).then(listOfCards => {
-        // let cards = []
-        //************
-    });
-    //Replace testarr \/ with ^ but working!!!
+        bigarr;
+        for(let card of listOfCards) {
+            for(i = 0; i < 52; i ++){
+                if (bigarr[i][0] == '') {
+                  //  bigarr[i][0] = ${card.value}
+                    //  bigarr[i][1] = ${card.suit} //WHY. WONT. IT. WORK
+                    //adds each card to array
+                }
+            }
+        }
+    })
     //Shuffles using Fisher-Ystes Shuffle-more equal chance than array.sort
-    for (let i = testarr.length - 1; i > 0; i --) {
-        let j = Math.floor(Math.random() * (i+1))
-        let temp = testarr[i]
-        testarr[i] = testarr[j]
-        testarr[j] = temp
+    for (let i = bigarr.length - 1; i > 0; i --) {
+        let n = Math.floor(Math.random() * (i+1))
+        let temp1 = bigarr[i][0]
+        let temp2 = bigarr[i][1]
+        let temp3 = bigarr[i][2]
+        bigarr[i][0] = bigarr[n][0]
+        bigarr[i][1] = bigarr[n][1]
+        bigarr[i][2] = bigarr[n][2]
+        bigarr[n][0] = temp1
+        bigarr[n][1] = temp2
+        bigarr[n][2] = temp3
     }
     //continues program flow
-    carddeal(testarr)
+    carddeal(bigarr)
 }
 
 //deals cards to players/draw pile, with one in discard as initial
 function carddeal(cardarr) {
     for (let i = 0; i < 7; i ++){
-        p1hand[i] = cardarr[i]
-        cardarr[i] = ''
+        p1hand[i][0] = cardarr[i][0]
+        p1hand[i][1] = cardarr[i][1]
+        p1hand[i][2] = cardarr[i][2]
+        cardarr[i][0] = ''
+        cardarr[i][1] = ''
+        cardarr[i][2] = ''
     }
     for (let i = 7; i < 14; i ++){
-        p2hand[i-7] = cardarr[i]
-        cardarr[i] = ''
+        p2hand[i-7][0] = cardarr[i][0]
+        p2hand[i-7][1] = cardarr[i][1]
+        p2hand[i-7][2] = cardarr[i][2]
+        cardarr[i][0] = ''
+        cardarr[i][1] = ''
+        cardarr[i][2] = ''
     }
     for (let i = 14; i <21; i ++){
-        p3hand[i-14] = cardarr[i]
-        cardarr[i] = ''
+        p3hand[i-14][0] = cardarr[i][0]
+        p3hand[i-14][1] = cardarr[i][1]
+        p3hand[i-14][2] = cardarr[i][2]
+        cardarr[i][0] = ''
+        cardarr[i][1] = ''
+        cardarr[i][2] = ''
     }
     for (let i = 21; i < 28; i ++){
-        userhand[i-21] = cardarr[i]
-        cardarr[i] = ''
+        userhand[i-21][0] = cardarr[i][0]
+        userhand[i-21][1] = cardarr[i][1]
+        userhand[i-21][2] = cardarr[i][2]
+        cardarr[i][0] = ''
+        cardarr[i][1] = ''
+        cardarr[i][2] = ''
     }
-    discardpile[0] = cardarr[28]
-    cardarr[28] = ''
+    discardpile[0][0] = cardarr[28][0]
+    discardpile[0][1] = cardarr[28][1]
+    discardpile[0][2] = cardarr[28][2]
+    cardarr[28][0] = ''
+    cardarr[28][1] = ''
+    cardarr[28][2] = ''
     for (let i = 29; i < cardarr.length; i ++) {
-        drawpile[i-29] = cardarr [i]
-        cardarr[i] = ''
+        drawpile[i-29][0] = cardarr [i][0]
+        drawpile[i-29][1] = cardarr [i][1]
+        drawpile[i-29][2] = cardarr [i][2]
+        cardarr[i][0] = ''
+        cardarr[i][1] = ''
+        cardarr[i][2] = ''
     }
     //continues program flow
     usercards(userhand)
@@ -231,10 +275,11 @@ function usercards(userhand) {
     let optionList = ""
     for (let i = 0; i < userhand.length, i ++;){
         alert(userhand[i])  //?
-        optionList += `<option value = ${i}>${userhand[i]}</option>`
+        optionList += `<option value = "${i}">${userhand[i]}</option>`
         //populates option list with player names from database
     }
     document.getElementById("cardselector").innerHTML = optionList
+    gameready=true
 }
 
 //set onclick to disabled before here! ?
@@ -308,6 +353,7 @@ function specialcards(cardsuit, cardvalue, lastcardvalue, count, currentplayer){
 }
 
 //checks for response when player on last card
+//UPDATE THE THING
 function lastcard(handsize, currentplayer) {
     //automates non-user turns
     if (currentplayer != 2) {
@@ -325,10 +371,6 @@ function lastcard(handsize, currentplayer) {
 }
 
 
-
-
-
-
 //ATTACH TO API STUFF
 //CHANGE CARDS TO MOVING ON CLICK
 //ASSIGN CARDS TO OBJECTS (+ comp equivalent)
@@ -340,10 +382,6 @@ function lastcard(handsize, currentplayer) {
 
 //game mechanics-check card played against rules and issue appropriate responses
 //checks card is of correct suit or value, and issues penalty if not
-
-
-
-
 
 
 function jacks() {
@@ -443,5 +481,121 @@ function gameend(handsize, turnend, currentplayer) {
         } else {
             window.location.href = "/client/winlose.html"
         }
+    }
+}
+
+function cardassign() {
+    for (let i = 0; i > p1hand.length; i ++) {
+        for (j = 2; j >= 10; j++){
+            if (p1hand[i][0] == j){
+                switch(p1hand[i][1]){
+                    case 'H':
+                        suit = "hearts"
+                        break
+                    case 'D':
+                        suit = "diamonds"
+                        break
+                    case 'S':
+                        suit = "spades"
+                        break
+                    case 'C':
+                        suit = "clubs"
+                        break
+                }
+                p1card[i][2] = j + "_of_" + suit
+            }
+        }
+    }
+    for (let i = 0; i > p2hand.length; i ++) {
+        for (j = 2; j >= 10; j++){
+            if (p2hand[i][0] == j){
+                switch(p2hand[i][1]){
+                    case 'H':
+                        suit = "hearts"
+                        break
+                    case 'D':
+                        suit = "diamonds"
+                        break
+                    case 'S':
+                        suit = "spades"
+                        break
+                    case 'C':
+                        suit = "clubs"
+                        break
+                }
+                p2card[i][2] = j + "_of_" + suit
+            }
+        }
+    }
+    for (let i = 0; i > p3hand.length; i ++) {
+        for (j = 2; j >= 10; j++){
+            if (p3hand[i][0] == j){
+                switch(p3hand[i][1]){
+                    case 'H':
+                        suit = "hearts"
+                        break
+                    case 'D':
+                        suit = "diamonds"
+                        break
+                    case 'S':
+                        suit = "spades"
+                        break
+                    case 'C':
+                        suit = "clubs"
+                        break
+                }
+                p3card[i][2]  = j + "_of_" + suit
+            }
+        }
+    }
+    for (let i = 0; i > userhand.length; i ++) {
+        for (j = 2; j >= 10; j++){
+            if (userhand[i][0] == j){
+                switch(userhand[i][1]){
+                    case 'H':
+                        suit = "hearts"
+                        break
+                    case 'D':
+                        suit = "diamonds"
+                        break
+                    case 'S':
+                        suit = "spades"
+                        break
+                    case 'C':
+                        suit = "clubs"
+                        break
+                }
+                usercard[i][2] = j + "_of_" + suit
+            }
+        }
+    }
+}
+
+function chooseplayercard(player){
+    switch (player){
+        case "p1":
+            cardno = Math.ceil(Math.random() * (p1hand.length - 1))
+            lastcardvalue = cardvalue
+            lastcardsuit = cardsuit
+            cardsuit = p1hand[cardno][1]
+            cardvalue = p1hand[cardno][0]
+            discardimg = "/client/images/cards/" + p1hand[cardno][2] + ".png"
+            break
+        case "p2":
+            cardno = Math.ceil(Math.random() * (p2hand.length - 1))
+            lastcardvalue = cardvalue
+            lastcardsuit = cardsuit
+            cardsuit = p2hand[cardno][1]
+            cardvalue = p2hand[cardno][0]
+            discardimg = "/client/images/cards/" + p2hand[cardno][2] + ".png"
+            break
+        case "p3":
+            cardno = Math.ceil(Math.random() * (p3hand.length - 1))
+            lastcardvalue = cardvalue
+            lastcardsuit = cardsuit
+            cardsuit = p3hand[cardno][1]
+            cardvalue = p3hand[cardno][0]
+            discardimg = "/client/images/cards/" + p3hand[cardno][2] + ".png"
+            break
     }
 }

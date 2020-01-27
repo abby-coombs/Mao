@@ -1,11 +1,8 @@
 Code stuff:
 CHANGE CARDS TO IMAGES NOT COLOURS
-FINISH CARDSHUFFLE
 FINISH PENALTIES
-playerselect.js needs work
 Finish win/lose link (Pass json as query on url!!!!)
 btn2.onclick: FIX complete = false after 10 sec
-    add/call(?) 'no talking' penalty where needed?
 
 General stuff:
 UPDATE DATA DICTIONARY
